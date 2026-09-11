@@ -1,0 +1,44 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh .claude/hooks/session-start.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'POST-IT: F1-F6. Un entregable, un fichero. No enviar al exterior. Router en CLAUDE.md.'"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Si el turno produjo un oficio reutilizable y NO se escribió en .claude/skills ni .claude/agents ni outputs/, responde {\"ok\": false, \"reason\": \"Falta F6 capitalizar: packer o fichero en outputs/\"}. Si el pedido era puntual o ya hay artefacto en disco, {\"ok\": true}."
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh .claude/hooks/block-outbound.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
